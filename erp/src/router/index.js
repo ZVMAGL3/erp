@@ -9,11 +9,14 @@ export default createRouter({
     routes:[
         {
             path:'/',
+            name:'/',
             beforeEnter: (to, from, next) => {
                 if(store.state.login.loginState === true){
-                    next("/personalPage")
+                    next("/homePage")
                 }else{
-                    next("/login")
+                    store.dispatch('login/initialization').then(() => {
+                        next('/login')
+                    })
                 }
             },
         },
@@ -21,6 +24,12 @@ export default createRouter({
             path:'/login',
             name:'login',
             component: () => import('/src/pages/login.vue'),
+
+        },
+        {
+            path:'/homePage',
+            name:'homePage',
+            component: () => import('/src/pages/homePage.vue'),
 
         },
     ]

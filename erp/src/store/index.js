@@ -7,7 +7,7 @@ import login from './login'
 
 // 创建并导出store
 export default createStore({
-  modules: {
-    login,
-  },
+    modules: {
+        login,
+    },
 })
