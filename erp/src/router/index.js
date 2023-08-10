@@ -14,8 +14,12 @@ export default createRouter({
                 if(store.state.login.loginState === true){
                     next("/homePage")
                 }else{
-                    store.dispatch('login/initialization').then(() => {
-                        next('/login')
+                    store.dispatch('login/initialization').then((isLoggedIn) => {
+                        if(isLoggedIn){
+                            next('/homePage')
+                        }else{
+                            next('/login')
+                        }
                     })
                 }
             },
