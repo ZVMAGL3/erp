@@ -1,46 +1,47 @@
 <template>
     <div class="shell">
         <div class="innerShell">
-            <div class="container a-container" :class="!LogIn?'is-txl':''" id="a-container">
-                <form action="" method="" class="form" id="a-form">
-                    <h2 class="form_title title">创建账号</h2>
-                    <div class="form_icons">
+            <div class="container a-container" :class="LogIn?'is-txl':''" id="a-container">
+                <div action="" method="" class="box" id="a-box">
+                    <h2 class="box_title title">创建账号</h2>
+                    <div class="box_icons">
                     </div>
-                    <span class="form_span">选择注册方式活电子邮箱注册</span>
-                    <input type="text" class="form_input" placeholder="Name">
-                    <input type="text" class="form_input" placeholder="Email">
-                    <input type="text" class="form_input" placeholder="Password">
-                    <button class="form_button button submit">SIGN UP</button>
-                </form>
+                    <!-- <span class="box_span">注册</span> -->
+                    <div v-for="element,index in property()" :key="index" class="input-group">
+                        <div v-if="complianceFunctions[index].value && (focusRecording[index] || loggedIn)" class="box_span">{{ element.Prompt }}</div>
+                        <input type="text" @blur="handleBlur(index)" class="box_input" :placeholder="element.placeholder" v-model="register_text[index]">
+                    </div>
+                    <button class="box_button button submit">SIGN UP</button>
+                </div>
             </div>
 
-            <div class="container b-container" :class="LogIn?'is-txl':''" id="b-container">
-                <form action="" method="" class="form" id="b-form">
-                    <h2 class="form_title title">登入账号</h2>
-                    <div class="form_icons">
+            <div class="container b-container" :class="(LogIn?'is-txl':'') + (LogIn?' is-z':'')" id="b-container">
+                <div action="" method="" class="box" id="b-box">
+                    <h2 class="box_title title">登入账号</h2>
+                    <div class="box_icons">
                     </div>
-                    <span class="form_span">选择登录方式活电子邮箱登录</span>
-                    <input type="text" class="form_input" placeholder="Email">
-                    <input type="text" class="form_input" placeholder="Password">
-                    <a class="form_link">忘记密码？</a>
-                    <button class="form_button button submit">SIGN IN</button>
-                </form>
+                    <!-- <span class="box_span">登录</span> -->
+                    <input type="text" class="box_input" placeholder="Mobile" v-model="login_mobile">
+                    <input type="text" class="box_input" placeholder="Password" v-model="login_password">
+                    <a class="box_link">忘记密码？</a>
+                    <button class="box_button button submit">SIGN IN</button>
+                </div>
             </div>
 
-            <div class="switch" :class="(!LogIn?'is-txr':'') + (is_gx?' is-gx':'')" id="switch-cnt">
+            <div class="switch" :class="(LogIn?'is-txr':'') + (is_gx?' is-gx':'')" id="switch-cnt">
                 <div class="switch_circle" :class="!LogIn?'is-txr':''"></div>
                 <div class="switch_circle switch_circle-t" :class="!LogIn?'is-txr':''"></div>
                 
                 <div class="switch_container" :class="LogIn?'is-hidden':''" id="switch-c1">
                     <h2 class="switch_title title" style="letter-spacing: 0;">Welcome Back!</h2>
                     <p class="switch_description description">已经有账号了嘛，去登入账号来进入奇妙世界吧！！！</p>
-                    <button class="switch_button button switch-btn" @click="changeForm">SIGN IN</button>
+                    <button class="switch_button button switch-btn" @click="changeBox">SIGN IN</button>
                 </div>
 
                 <div class="switch_container" :class="!LogIn?'is-hidden':''" id="switch-c2">
                     <h2 class="switch_title title" style="letter-spacing: 0;">Hello Friend!</h2>
                     <p class="switch_description description">去注册一个账号，成为尊贵的粉丝会员，让我们踏入奇妙的旅途！</p>
-                    <button class="switch_button button switch-btn" @click="changeForm">SIGN UP</button>
+                    <button class="switch_button button switch-btn" @click="changeBox">SIGN UP</button>
                 </div>
             </div>
         </div>
@@ -48,17 +49,71 @@
 </template>
 
 <script setup>
-    import { ref } from 'vue';
+    import { ref,reactive,computed } from 'vue';
+
+    //样式调整
     let LogIn = ref(true)
 
     let is_gx = ref(false)
     
-    function changeForm(){
-        is_gx.value = true
-        LogIn.value=!LogIn.value
-        setTimeout(function () {
-            is_gx.value = !is_gx.value
-        }, 1500)
+    function changeBox(){
+        if(!is_gx.value){
+            is_gx.value = true
+            LogIn.value=!LogIn.value
+            setTimeout(function () {
+                is_gx.value = !is_gx.value
+            }, 1000)
+        }
+    }
+
+    //表单数据
+    let login_mobile = ref('') //用户手机号
+    let login_password = ref('') //用户密码
+    let register_text= reactive( //注册
+        ['','','','']
+    )
+    let focusRecording = reactive([false,false,false,false]) //记录是否显示不合规
+
+    function handleBlur(index){ //显示不合规
+        focusRecording[index] = true
+    }
+
+    let loggedIn = ref(false) //默认显示不合规
+
+    let complianceFunctions = [
+        computed(() => !RegExpression_s(register_text[0], 0)),
+        computed(() => !RegExpression_s(register_text[1], 1)),
+        computed(() => !RegExpression_s(register_text[2], 2)),
+        computed(() => !(register_text[2] === register_text[3]))
+    ]
+
+    let property = () => [
+        
+        {
+            Prompt:'* 请输入用户名,第一个不能为数字',
+            placeholder:'Name',
+        },
+        {
+            Prompt:'* 请输入正确的手机号',
+            placeholder:'Mobile',
+        },
+        {
+            Prompt:'* 8-12位,需包含数字、大写字母、小写字母和特殊符号(@$!%*?&~)',
+            placeholder:'Password',
+        },
+        {
+            Prompt:'* 确认密码必须和设置的密码一致',
+            placeholder:'Confirm Password',
+        },
+    ]
+
+    function RegExpression_s(val,i){//正则表达式
+        let array = [
+            /^(?![0-9])(?!.*[?!@&|/])[^\s]{1,16}$/, //不为以数字开头
+            /^(\+\d{2,3}\-)?\d{11}$/, //手机号
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&~])[A-Za-z\d@$!%*?&~]{8,}$/,   //password
+        ];
+        return array[i].test(val)
     }
 </script>
 
@@ -136,13 +191,24 @@
         transition: 1.25s;
     }
 
-    .form {
+    .box {
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
         width: 100%;
         height: 100%;
+    }
+
+    .box_title{
+        margin-bottom: 10px;
+    }
+
+    .input-group{
+        display: flex;
+        flex-direction: column; /* 将子元素垂直排列 */
+        align-items: flex-start; /* 左对齐子元素 */
+        margin-bottom: 10px;
     }
 
     .iconfont {
@@ -161,7 +227,7 @@
         cursor: pointer;
     }
 
-    .form_input {
+    .box_input {
         width: 350px;
         height: 40px;
         margin: 4px 0;
@@ -176,16 +242,18 @@
         box-shadow: inset 2px 2px 4px #d1d9e6, inset -2px -2px 4px #f9f9f9;
     }
 
-    .form_input:focus {
+    .box_input:focus {
         box-shadow: inset 4px 4px 4px #d1d9e6, inset -4px -4px 4px #f9f9f9;
     }
 
-    .form_span {
-        margin-top: 30px;
-        margin-bottom: 12px;
+    .box_span {
+        margin-left: 20px;
+        color:red;
+        width: 220px;
+         text-align: left;
     }
 
-    .form_link {
+    .box_link {
         color: #181818;
         font-size: 15px;
         margin-top: 25px;
