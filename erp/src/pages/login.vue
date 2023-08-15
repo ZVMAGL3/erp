@@ -9,7 +9,7 @@
                     <!-- <span class="box_span">注册</span> -->
                     <div v-for="element,index in property()" :key="index" class="input-group">
                         <div v-if="complianceFunctions[index].value && (focusRecording[index] || loggedIn)" class="box_span">{{ element.Prompt }}</div>
-                        <input type="text" @blur="handleBlur(index)" class="box_input" :placeholder="element.placeholder" v-model="register_text[index]">
+                        <input :type="element.type" @blur="handleBlur(index)" class="box_input" :placeholder="element.placeholder" v-model="register_text[index]">
                     </div>
                     <button class="box_button button submit">SIGN UP</button>
                 </div>
@@ -70,7 +70,7 @@
     let login_mobile = ref('') //用户手机号
     let login_password = ref('') //用户密码
     let register_text= reactive( //注册
-        ['','','','']
+        ['']
     )
     let focusRecording = reactive([false,false,false,false]) //记录是否显示不合规
 
@@ -92,18 +92,22 @@
         {
             Prompt:'* 请输入用户名,第一个不能为数字',
             placeholder:'Name',
+            type:'text'
         },
         {
             Prompt:'* 请输入正确的手机号',
             placeholder:'Mobile',
+            type:'text'
         },
         {
             Prompt:'* 8-12位,需包含数字、大写字母、小写字母和特殊符号(@$!%*?&~)',
             placeholder:'Password',
+            type:'password'
         },
         {
             Prompt:'* 确认密码必须和设置的密码一致',
             placeholder:'Confirm Password',
+            type:'password'
         },
     ]
 
