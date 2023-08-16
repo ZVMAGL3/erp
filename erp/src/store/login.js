@@ -19,7 +19,7 @@ export default {
             //判断本地是否存储着登录信息
             if (identification && identityHash) {
                 try {
-                    const response = await axios.post('http://localhost/erp_server/app.php', {
+                    const response = await axios.post('http://localhost:1023/app.php', {
                         identification,
                         identityHash
                     });
