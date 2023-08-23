@@ -15,15 +15,7 @@ export default createRouter({
         {
             path:'/login',
             name:'login',
-            beforeEnter: (to, from, next) => {
-                if(store.state.login.loginState === true){
-                    next("/homePage")
-                }else{
-                    next()
-                }
-            },
             component: () => import('/src/pages/login.vue'),
-
         },
         {
             path:'/homePage',
@@ -41,7 +33,43 @@ export default createRouter({
                     })
                 }
             },
-            component: () => import('/src/pages/homePage.vue'),
+            component: () => import('/src/pages/homePage/homePage.vue'),
+            redirect:'/workbench',
+            children:[
+				{
+					path:'/workbench',
+                    name:'workbench',
+					component:() => import('/src/pages/homePage/workbench/workbench.vue'),
+                    redirect:'/desktop',
+                    children:[
+                        {
+                            path:'/desktop',
+                            name:'desktop',
+                            component:() => import('/src/pages/homePage/workbench/desktop.vue'),
+                        },
+                        {
+                            path:'/profileHub',
+                            name:'profileHub',
+                            component:() => import('/src/pages/homePage/workbench/profileHub.vue'),
+                        },
+                    ]
+				},
+				{
+					path:'/contacts',
+                    name:'contacts',
+					component:() => import('/src/pages/homePage/contacts.vue'),
+				},
+				{
+					path:'/chatroom',
+                    name:'chatroom',
+					component:() => import('/src/pages/homePage/chatroom.vue'),
+				},
+				{
+					path:'/setUp',
+                    name:'setUp',
+					component:() => import('/src/pages/homePage/setUp.vue'),
+				},
+            ]
         },
     ]
 })

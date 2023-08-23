@@ -3,24 +3,33 @@
         <div class="logo">
             <img src="images/logo_white.png" alt="">
         </div>
+        <div
+            class="top_navbarName" 
+            :class="navbar_index === -1?'navbar_caches':''"
+            :style="navbar_index === -1?'background-color: #fff;':''"
+            @click="click_navbar('desktop',-1)"
+        >桌面</div>
         <div 
-            v-for="name,index in top_navbarName" 
+            v-for="navbar,index in top_navbar" 
             class="top_navbarName" 
             :class="navbar_index === index?'navbar_caches':''"
-            :style="navbar_index === 0 && index === 0 ?'background-color: #fff;':''"
-            @click="click_navbar(index)"
-        >{{ name }}</div>
+            @click="click_navbar(navbar.nextRoute,index)"
+        >{{ navbar.name }}</div>
     </div>
 </template>
 
 <script setup>
 
     import { ref } from 'vue';
+    import { useRouter } from 'vue-router';
 
-    let top_navbarName = ['桌面','顾客档案表','123','123']
-    let navbar_index = ref(0)
+    const router = useRouter();
 
-    function click_navbar(index){
+    let top_navbar = new Set([{name:'简历中心',nextRoute:'profileHub'}])
+    let navbar_index = ref(-1)
+
+    function click_navbar(nextRoute,index){
+        router.push({ name: nextRoute })
         navbar_index.value = index
     }
 
@@ -55,7 +64,7 @@
         padding:0px 15px;
         height: 30px;
         line-height: 30px;
-
+        white-space: nowrap;
         background-color: #939393;
         color: #000;
         font-size: 12px;

@@ -2,17 +2,13 @@
     <div class="container">
         <left_navbar/>
         <div class="homePage">
-            <top_navbar/>
-            <div>
-                <router-view></router-view>
-            </div>
+            <router-view></router-view>
         </div>
     </div>
 </template>
 
 <script setup>
     import left_navbar from "/src/components/left_navbar.vue"
-    import top_navbar from "/src/components/top_navbar.vue"
 </script>
 
 <style scoped>
@@ -25,7 +21,10 @@
     }  
 
     .homePage{
-        width:100%
+        width:100%;
+        overflow: hidden;
+        flex:1;
+        
     }
 
 </style>

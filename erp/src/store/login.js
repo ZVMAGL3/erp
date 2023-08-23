@@ -29,8 +29,8 @@ export default {
                         return true;
                     } else {
                         console.log('登录失败');
-                        // localStorage.removeItem('identification');
-                        // localStorage.removeItem('identityHash');
+                        localStorage.removeItem('identification');
+                        localStorage.removeItem('identityHash');
                     }
                 } catch (error) {
                     console.log('Error:', error);
