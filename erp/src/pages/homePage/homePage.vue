@@ -1,9 +1,7 @@
 <template>
     <div class="container">
         <left_navbar/>
-        <div class="homePage">
-            <router-view></router-view>
-        </div>
+        <router-view></router-view>
     </div>
 </template>
 
@@ -20,11 +18,6 @@
         display: flex;
     }  
 
-    .homePage{
-        width:100%;
-        overflow: hidden;
-        flex:1;
-        
-    }
+
 
 </style>

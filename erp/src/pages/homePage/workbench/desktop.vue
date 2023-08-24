@@ -93,7 +93,6 @@ import { reactive } from 'vue';
 
     .shell{
         width: 100%;
-        min-width: 440px;
         height: 100%;
         padding: 0 20px;
         padding-top: 30px;
@@ -107,7 +106,6 @@ import { reactive } from 'vue';
 
     .parentNavbar{
         width: 100%;
-        min-width: 400px;
         max-width: 1400px;
         height: auto;
         margin-bottom: 30px;
