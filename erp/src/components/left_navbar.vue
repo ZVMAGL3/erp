@@ -55,6 +55,7 @@
 
     .left-navbar{
         width:78px;
+        min-width:78px;
         height: 100vh;
         background: #333;
         color: #FFF;

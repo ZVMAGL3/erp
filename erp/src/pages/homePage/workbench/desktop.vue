@@ -93,7 +93,7 @@ import { reactive } from 'vue';
 
     .shell{
         width: 100%;
-        height: 100%;
+        height: calc(100% - 56px);
         padding: 0 20px;
         padding-top: 30px;
 
@@ -102,11 +102,12 @@ import { reactive } from 'vue';
         display: flex;
         flex-direction: column;
         align-items: center;
+        
     }
 
-    .parentNavbar{
+    .parentNavbar{ 
         width: 100%;
-        max-width: 1400px;
+        max-width: 1700px;
         height: auto;
         margin-bottom: 30px;
         display: flex;

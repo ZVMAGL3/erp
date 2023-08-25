@@ -1,9 +1,7 @@
 <template>
     <div class="homePage">
         <top_navbar/>
-        <div class="main_area">
-            <router-view></router-view>
-        </div>
+        <router-view></router-view>
     </div>
 </template>
 
@@ -14,13 +12,10 @@
 <style>
     
     .homePage{
-        width: 100%;
-        min-width: 790px;
+        width: calc(100% - 78px);
+        min-width: 800px;
         display: flex;
         flex-direction: column;
-        overflow: hidden;
-        overflow-x: auto; /* 启用水平滚动 */
     }
-
 
 </style>
