@@ -8,7 +8,7 @@
             v-for="eve,index in left_navbarJOSN" 
             class="left_navbar_box"
             :class="navbar_index === index?'navbar_caches':''"
-            @click="navbar(eve.nextRoute,index)"
+            @click="c(eve.nextRoute,index)"
         >
             <Icon :icon="eve.icon" style="font-size: 24px;"/>
             <span style="font-size: 6px;">{{ eve.name }}</span>
@@ -25,18 +25,18 @@
     const router = useRouter();
 
     let left_navbarJOSN = reactive([
-        {name:'工作台',     nextRoute:'workbench',          icon:'fluent:desktop-mac-24-regular'},
-        {name:'通讯录',     nextRoute:'contacts',           icon:'mingcute:contacts-fill'},
-        {name:'聊天室',     nextRoute:'chatroom',           icon:'gridicons:chat'},
-        {name:'设置',       nextRoute:'setUp',              icon:'solar:settings-line-duotone'},
-        {name:'官网',       nextRoute:'official',           icon:'material-symbols:open-in-new-sharp'},
-        {name:'退出',       nextRoute:'login',              icon:'gg:log-out'}
+        {name:'工作台',     nextRoute:'workbench',      icon:'fluent:desktop-mac-24-regular'},
+        {name:'通讯录',     nextRoute:'contacts',       icon:'mingcute:contacts-fill'},
+        {name:'聊天室',     nextRoute:'chatroom',       icon:'gridicons:chat'},
+        {name:'设置',       nextRoute:'setUp',          icon:'solar:settings-line-duotone'},
+        {name:'官网',       nextRoute:'official',       icon:'material-symbols:open-in-new-sharp'},
+        {name:'退出',       nextRoute:'login',          icon:'gg:log-out'}
     ])
     
     let navbar_index = ref(0)
 
     function navbar(nextRoute,index){
-        navbar_index.value = index
+        navbar_index.value = index<=3?index:navbar_index.value
         switch(nextRoute){
             case 'official':
                 window.open('http://www.sqp-cert.com', '_blank');
@@ -95,6 +95,10 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+    }
+
+    .left_navbar_box:hover{
+        background-color: #666;
     }
 
     .navbar_caches{

@@ -3,7 +3,7 @@ export default {
     namespaced: true,
     //数据存储
     state: () => ({
-
+        top_navbar : new Set([]),
     }),
     mutations:{
         //替换元素

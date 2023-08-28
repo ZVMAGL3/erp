@@ -50,7 +50,7 @@ export default createRouter({
                         {
                             path:'/profileHub',
                             name:'profileHub',
-                            component:() => import('/src/pages/homePage/workbench/profileHub.vue'),
+                            component:() => import('/src/pages/homePage/workbench/top_navbar/profileHub.vue'),
                         },
                     ]
 				},

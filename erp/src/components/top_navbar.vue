@@ -22,10 +22,11 @@
 
     import { ref } from 'vue';
     import { useRouter } from 'vue-router';
+    import { useMapState } from '/src/hooks/useMapState'
 
     const router = useRouter();
+    const { top_navbar } = useMapState('homePage', ['top_navbar']);
 
-    let top_navbar = new Set([{name:'简历中心',nextRoute:'profileHub'}])
     let navbar_index = ref(-1)
 
     function click_navbar(nextRoute,index){

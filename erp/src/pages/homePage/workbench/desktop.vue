@@ -1,27 +1,35 @@
 <template>
         <div class="shell">
-            <div 
-                v-for="parentNavbar,parentIndex in navbar" 
-                :key="parentNavbar.navbarName"
-                class="parentNavbar"
-            >
-                <div class="label">{{ parentNavbar.navbarName.split(" ")[0] }}</div>
-                <div class="parentNavbarName">{{ parentNavbar.navbarName.split(" ")[1] }}</div>
-                <div class="childNavbarBox">
-                    <div 
-                        v-for="childNavbar,childIndex in parentNavbar.navbar" 
-                        :key="childNavbar.navbarName "
-                        class="childNavbar"
-                    >{{ childNavbar.navbarName }}</div>
+            <div class="inner_shell">
+                <div 
+                    v-for="parentNavbar,parentIndex in navbar" 
+                    :key="parentNavbar.navbarName"
+                    class="parentNavbar"
+                >
+                    <div class="divider" v-if="parentIndex"></div>
+                    <div class="condition">
+                        <div class="label">{{ parentNavbar.navbarName.split(" ")[0] }}</div>
+                        <div class="parentNavbarName">{{ parentNavbar.navbarName.split(" ")[1] }}:</div>
+                        <div class="childNavbarBox">
+                            <div 
+                                v-for="childNavbar,childIndex in parentNavbar.navbar" 
+                                :key="childNavbar.navbarName "
+                                class="childNavbar"
+                                :class="top_navbar.has(childNavbar)?'included':''"
+                                @click="navbar_choose(childNavbar)"
+                            >{{ childNavbar.navbarName }}</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 </template>
 
 <script setup>
-import { reactive } from 'vue';
-
-    let navbar =reactive([
+    import { reactive } from 'vue';
+    import { useMapState } from '/src/hooks/useMapState'
+    const { top_navbar } = useMapState('homePage', ['top_navbar']);
+    let navbar = reactive([
         {navbarName:'M1 组织环境',navbar:[
             {navbarName:'认证模板',nextRoute:'nextRoute'},
         ]},
@@ -33,7 +41,7 @@ import { reactive } from 'vue';
             {navbarName:'工资汇总表',nextRoute:'nextRoute'},
             {navbarName:'快递收发登记',nextRoute:'nextRoute'},
             {navbarName:'每日工作汇报表',nextRoute:'nextRoute'},
-            {navbarName:'简历中心',nextRoute:'nextRoute'},
+            {navbarName:'简历中心',nextRoute:'profileHub'},
             {navbarName:'解除劳动合同证明书',nextRoute:'nextRoute'},
             {navbarName:'请假调休加班外出单',nextRoute:'nextRoute'},
             {navbarName:'贡献值',nextRoute:'nextRoute'},
@@ -86,7 +94,16 @@ import { reactive } from 'vue';
             {navbarName:'顾客财产清单',nextRoute:'nextRoute'},
         ]},
     ])
-
+    function navbar_choose(childNavbar){
+        let nextRoute = childNavbar.nextRoute
+        if(nextRoute !== 'nextRoute'){
+            if(top_navbar.value.has(nextRoute)){
+                console.log(1)
+            }else{
+                console.log(1)
+            }
+        }
+    }
 </script>
 
 <style>
@@ -94,45 +111,62 @@ import { reactive } from 'vue';
     .shell{
         width: 100%;
         height: calc(100% - 56px);
-        padding: 0 20px;
-        padding-top: 30px;
 
-        font-size: 16px;
-        line-height: 40px;
+        font-size: 14px;
+        line-height: 30px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        
+        overflow: hidden;
+    }
+
+    .inner_shell{
+        margin:0 20px;
+        margin-top: 30px;
+        padding: 0px 20px;
+        border: 1px solid #dcdfe6;
     }
 
     .parentNavbar{ 
         width: 100%;
         max-width: 1700px;
         height: auto;
-        margin-bottom: 30px;
         display: flex;
-        box-shadow: 2px 3px 18px rgba(0,0,0,0.18);
-        border-radius: 18px 5px 3px 3px;
-        background-color: #504FF0;
+        flex-direction: column;
+        
         overflow: hidden;
+    }
+    
+    .divider {
+        width: 100%;
+        height: 1px;
+        border-top: 1px dashed #dcdfe6;
+    }
+
+    .condition{
+        display: flex;
+        margin-bottom:10px;
     }
 
     .label{
         width: 35px;
-        height: 40px;
+        height: 30px;
         margin-left: 5px;
+        margin-top: 10px;
         text-align: right;
         white-space: nowrap;
-        color: #FFF;
+        color: #909399;
     }
 
     .parentNavbarName{
         width: 80px;
         padding-right: 10px;
-        height: 40px;
+        margin-right: 30px;
+        margin-top: 10px;
+        height: 30px;
         text-align: right;
         white-space: nowrap;
-        color: #FFF;
+        color: #909399;
     }
 
     .childNavbarBox{
@@ -143,12 +177,25 @@ import { reactive } from 'vue';
         background-color: #FFF;
     }
 
+    .included{
+        background-color: #3473e6;
+        color: #FFF;
+    }
+
     .childNavbar{
-        height: 40px;
-        margin-right: 10px;
-        margin-left: 5px;
+        height: 30px;
+        padding: 0px 10px;
+        margin: 0 5px;
+        margin-top: 10px;
+
         text-align: left;
         white-space: nowrap;
+        border-radius: 2px;
+    }
+    
+    .childNavbar:hover{
+        background-color: #3473e6;
+        color: #FFF;
     }
 
 </style>
