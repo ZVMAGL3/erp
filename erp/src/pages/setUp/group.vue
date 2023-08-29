@@ -1,11 +1,11 @@
 <template>
-setUp
+    group
 </template>
 
 <script setup>
 
 </script>
 
-<style>
+<style scoped>
 
 </style>

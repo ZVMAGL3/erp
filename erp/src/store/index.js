@@ -5,10 +5,11 @@ import { createStore } from 'vuex'
 
 import login from './login'
 import homePage from './homePage'
+import setUP from './setUP'
 
 // 创建并导出store
 export default createStore({
     modules: {
-        login,homePage
+        login,homePage,setUP
     },
 })

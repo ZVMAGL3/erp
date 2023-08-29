@@ -10,7 +10,7 @@
 </template>
 
 <script setup>
-    import top_navbar from '/src/components/top_navbar.vue';
+    import top_navbar from '/src/components/homePage_top_navbar.vue';
 </script>
 
 <style scoped>

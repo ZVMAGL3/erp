@@ -64,11 +64,34 @@ export default createRouter({
                     name:'chatroom',
 					component:() => import('/src/pages/homePage/chatroom.vue'),
 				},
-				{
-					path:'/setUp',
-                    name:'setUp',
-					component:() => import('/src/pages/homePage/setUp.vue'),
-				},
+            ]
+        },
+        {
+            path:'/setUp',
+            name:'setUp',
+            component:() => import('/src/pages/setUp/setUp.vue'),
+            redirect:'/company',
+            children:[
+                {
+                    path:'/company',
+                    name:'company',
+                    component:() => import('/src/pages/setUp/company.vue'),
+                },
+                {
+                    path:'/regulation',
+                    name:'regulation',
+                    component:() => import('/src/pages/setUp/regulation.vue'),
+                },
+                {
+                    path:'/group',
+                    name:'group',
+                    component:() => import('/src/pages/setUp/group.vue'),
+                },
+                {
+                    path:'/position',
+                    name:'position',
+                    component:() => import('/src/pages/setUp/position.vue'),
+                },
             ]
         },
     ]

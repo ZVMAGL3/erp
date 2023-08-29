@@ -6,7 +6,7 @@
 </template>
 
 <script setup>
-    import left_navbar from "/src/components/left_navbar.vue"
+    import left_navbar from "/src/components/homePage_left_navbar.vue"
 </script>
 
 <style scoped>
@@ -17,7 +17,5 @@
         min-height: 600px;
         display: flex;
     }  
-
-
 
 </style>
