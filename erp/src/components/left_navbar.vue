@@ -8,7 +8,7 @@
             v-for="eve,index in left_navbarJOSN" 
             class="left_navbar_box"
             :class="navbar_index === index?'navbar_caches':''"
-            @click="c(eve.nextRoute,index)"
+            @click="navbar(eve.nextRoute,index)"
         >
             <Icon :icon="eve.icon" style="font-size: 24px;"/>
             <span style="font-size: 6px;">{{ eve.name }}</span>

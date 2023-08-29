@@ -5,33 +5,54 @@
         </div>
         <div
             class="top_navbarName" 
-            :class="navbar_index === -1?'navbar_caches':''"
-            :style="navbar_index === -1?'background-color: #fff;':''"
-            @click="click_navbar('desktop',-1)"
+            :class="navbar_index.nextRoute === 'desktop'?'navbar_caches':''"
+            :style="navbar_index.nextRoute === 'desktop'?'background-color: #fff;':''"
+            @click="click_desktop"
         >桌面</div>
         <div 
             v-for="navbar,index in top_navbar" 
             class="top_navbarName" 
-            :class="navbar_index === index?'navbar_caches':''"
-            @click="click_navbar(navbar.nextRoute,index)"
-        >{{ navbar.name }}</div>
+            :class="navbar_index.nextRoute === navbar.nextRoute?'navbar_caches':''"
+            @click="click_navbar(navbar)"
+            @dblclick="dblclick_navbar(navbar)"
+        >{{ navbar.navbarName }}</div>
     </div>
 </template>
 
 <script setup>
 
-    import { ref } from 'vue';
     import { useRouter } from 'vue-router';
     import { useMapState } from '/src/hooks/useMapState'
+    import { useStore } from "vuex"
 
+    const store = useStore();
     const router = useRouter();
-    const { top_navbar } = useMapState('homePage', ['top_navbar']);
+    const { top_navbar,navbar_index } = useMapState('homePage', ['top_navbar','navbar_index']);
 
-    let navbar_index = ref(-1)
+    let desktop = {navbarName:'桌面',nextRoute:'desktop'}
+    let clickTimer = null
 
-    function click_navbar(nextRoute,index){
-        router.push({ name: nextRoute })
-        navbar_index.value = index
+    //单击
+    function click_navbar(childNavbar){
+        clearTimeout(clickTimer); // 清除之前的计时器
+        clickTimer = setTimeout(() => {
+            store.dispatch('homePage/addTop_navbar',childNavbar)
+            router.push({ name: childNavbar.nextRoute })
+        }, 150); // 设置一个较短的延时，如果在这个延时内双击，则不触发单击事件
+    }
+
+    //双击
+    function dblclick_navbar(nextRoute){
+        clearTimeout(clickTimer); // 清除之前的计时器
+        store.commit('homePage/deleteSet',['top_navbar',nextRoute])
+        if(navbar_index.value,nextRoute === nextRoute){
+            click_desktop()
+        }
+    }
+
+    function click_desktop(){
+        store.commit('homePage/replaceAll',['navbar_index',desktop])
+        router.push({ name: 'desktop' })
     }
 
 </script>

@@ -28,7 +28,12 @@
 <script setup>
     import { reactive } from 'vue';
     import { useMapState } from '/src/hooks/useMapState'
-    const { top_navbar } = useMapState('homePage', ['top_navbar']);
+    import { useStore } from "vuex"
+    import { useRouter } from 'vue-router';
+
+    const router = useRouter();
+    const store = useStore();
+    const { top_navbar } = useMapState('homePage', ['top_navbar',]);
     let navbar = reactive([
         {navbarName:'M1 组织环境',navbar:[
             {navbarName:'认证模板',nextRoute:'nextRoute'},
@@ -97,20 +102,16 @@
     function navbar_choose(childNavbar){
         let nextRoute = childNavbar.nextRoute
         if(nextRoute !== 'nextRoute'){
-            if(top_navbar.value.has(nextRoute)){
-                console.log(1)
-            }else{
-                console.log(1)
-            }
+            store.dispatch('homePage/addTop_navbar',childNavbar)
+            router.push({ name: childNavbar.nextRoute })
         }
     }
 </script>
 
-<style>
+<style scoped>
 
     .shell{
-        width: 100%;
-        height: calc(100% - 56px);
+        width: 100%;;
 
         font-size: 14px;
         line-height: 30px;

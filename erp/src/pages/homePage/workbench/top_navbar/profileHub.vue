@@ -6,6 +6,6 @@ profileHub
 
 </script>
 
-<style>
+<style scoped>
 
 </style>
