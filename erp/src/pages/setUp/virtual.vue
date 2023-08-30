@@ -1,5 +1,5 @@
 <template>
-    company
+    virtual
 </template>
 
 <script setup>

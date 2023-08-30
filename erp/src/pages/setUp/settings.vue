@@ -1,5 +1,5 @@
 <template>
-    company
+    settings
 </template>
 
 <script setup>

@@ -1,5 +1,5 @@
 <template>
-    company
+    checklist
 </template>
 
 <script setup>

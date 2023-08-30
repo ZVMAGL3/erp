@@ -1,5 +1,5 @@
 <template>
-    company
+    portion
 </template>
 
 <script setup>

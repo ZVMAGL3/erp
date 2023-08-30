@@ -38,6 +38,12 @@ export default {
             }
 
             return false;
+        },
+        sign_in(context,userinfo){
+
+        },
+        sign_up(context,userinfo){
+
         }
     },
 }

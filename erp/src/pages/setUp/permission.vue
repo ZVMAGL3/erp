@@ -1,5 +1,5 @@
 <template>
-    position
+    permission
 </template>
 
 <script setup>

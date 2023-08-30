@@ -1,5 +1,5 @@
 <template>
-    company
+    management
 </template>
 
 <script setup>

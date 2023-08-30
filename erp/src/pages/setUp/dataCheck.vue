@@ -1,5 +1,5 @@
 <template>
-    company
+    dataCheck
 </template>
 
 <script setup>

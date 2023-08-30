@@ -11,7 +11,7 @@
                         <div v-if="complianceFunctions[index].value && (focusRecording[index] || loggedIn)" class="box_span">{{ element.Prompt }}</div>
                         <input :type="element.type" @blur="handleBlur(index)" class="box_input" :placeholder="element.placeholder" v-model="register_text[index]">
                     </div>
-                    <button class="box_button button submit">SIGN UP</button>
+                    <button class="box_button button submit" @click="sign_up">SIGN UP</button>
                 </div>
             </div>
 
@@ -21,10 +21,10 @@
                     <div class="box_icons">
                     </div>
                     <!-- <span class="box_span">登录</span> -->
-                    <input type="text" class="box_input" placeholder="Mobile" v-model="login_mobile">
-                    <input type="text" class="box_input" placeholder="Password" v-model="login_password">
+                    <input type="text" class="box_input" placeholder="Mobile" v-model="mobile">
+                    <input type="text" class="box_input" placeholder="Password" v-model="password">
                     <a class="box_link">忘记密码？</a>
-                    <button class="box_button button submit">SIGN IN</button>
+                    <button class="box_button button submit" @click="sign_in">SIGN IN</button>
                 </div>
             </div>
 
@@ -40,7 +40,7 @@
 
                 <div class="switch_container" :class="!LogIn?'is-hidden':''" id="switch-c2">
                     <h2 class="switch_title title" style="letter-spacing: 0;">Hello Friend!</h2>
-                    <p class="switch_description description">去注册一个账号，成为尊贵的粉丝会员，让我们踏入奇妙的旅途！</p>
+                    <p class="switch_description description">去注册一个账号，成为尊贵的会员，让我们踏入奇妙的旅途！</p>
                     <button class="switch_button button switch-btn" @click="changeBox">SIGN UP</button>
                 </div>
             </div>
@@ -50,7 +50,9 @@
 
 <script setup>
     import { ref,reactive,computed } from 'vue';
+    import { useStore } from "vuex"
 
+    const store = useStore();
     //样式调整
     let LogIn = ref(true)
 
@@ -67,8 +69,8 @@
     }
 
     //表单数据
-    let login_mobile = ref('') //用户手机号
-    let login_password = ref('') //用户密码
+    let mobile = ref('') //用户手机号
+    let password = ref('') //用户密码
     let register_text= reactive( //注册
         ['']
     )
@@ -118,6 +120,14 @@
             /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&~])[A-Za-z\d@$!%*?&~]{8,}$/,   //password
         ];
         return array[i].test(val)
+    }
+
+    function sign_in(){
+        store.dispatch('login/sign_in',{mobile,password})
+    }
+
+    function sign_up(){
+        store.dispatch('login/sign_up',register_text)
     }
 </script>
 

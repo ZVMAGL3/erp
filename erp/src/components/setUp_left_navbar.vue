@@ -23,18 +23,18 @@
 
     let left_navbarJOSN = reactive([
         {name:'公司',           nextRoute:'company',        icon:'mdi:company'},
-        {name:'标准',           nextRoute:'regulation',    icon:'tdesign:system-regulation'},
+        {name:'标准',           nextRoute:'regulation',     icon:'tdesign:system-regulation'},
         {name:'集团',           nextRoute:'group',          icon:'mingcute:department-line'},
-        {name:'部门、职位',     nextRoute:'setUp',          icon:'solar:settings-line-duotone'},
-        {name:'职位工资设定',   nextRoute:'official',       icon:'material-symbols:open-in-new-sharp'},
-        {name:'岗位任命',       nextRoute:'official',       icon:'material-symbols:open-in-new-sharp'},
-        {name:'记录清单',       nextRoute:'official',       icon:'material-symbols:open-in-new-sharp'},
-        {name:'职责权限',       nextRoute:'official',       icon:'material-symbols:open-in-new-sharp'},
-        {name:'利益分配',       nextRoute:'official',       icon:'material-symbols:open-in-new-sharp'},
-        {name:'云账户',         nextRoute:'official',       icon:'material-symbols:open-in-new-sharp'},
-        {name:'数据检查',       nextRoute:'official',       icon:'material-symbols:open-in-new-sharp'},
-        {name:'系统',           nextRoute:'official',       icon:'material-symbols:open-in-new-sharp'},
-        {name:'密码',           nextRoute:'official',       icon:'material-symbols:open-in-new-sharp'},
+        {name:'部门、职位',     nextRoute:'assignment',     icon:'material-symbols:assignment-ind-outline'},
+        {name:'职位工资设定',   nextRoute:'management',     icon:'fluent-mdl2:account-management'},
+        {name:'岗位任命',       nextRoute:'appointment',    icon:'icon-park-outline:appointment'},
+        {name:'记录清单',       nextRoute:'checklist',      icon:'solar:checklist-minimalistic-broken'},
+        {name:'职责权限',       nextRoute:'permission',     icon:'solar:checklist-minimalistic-broken'},
+        {name:'利益分配',       nextRoute:'portion',        icon:'icon-park-outline:chart-proportion'},
+        {name:'云账户',         nextRoute:'virtual',        icon:'carbon:virtual-desktop'},
+        {name:'数据检查',       nextRoute:'dataCheck',      icon:'material-symbols:data-check'},
+        {name:'系统',           nextRoute:'settings',       icon:'mingcute:settings-2-line'},
+        {name:'密码',           nextRoute:'key',            icon:'solar:key-broken'},
         {name:'返回',           nextRoute:'homePage',       icon:'typcn:arrow-back-outline'}
     ])
     
@@ -50,7 +50,6 @@
             //     localStorage.removeItem('identification');
             //     localStorage.removeItem('identityHash');
             default:
-                console.log(nextRoute)
                 router.push({ name: nextRoute });
         }
     }

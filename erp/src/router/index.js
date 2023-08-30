@@ -3,6 +3,7 @@ import store from '../store/index';
 
 const routerHistory = createWebHashHistory();
 //引入组件
+const setupPageNames = ['company', 'regulation', 'group', 'assignment', 'management', 'checklist','permission','portion','virtual','dataCheck','settings','key'];
 
 export default createRouter({
 	history:routerHistory,
@@ -71,28 +72,11 @@ export default createRouter({
             name:'setUp',
             component:() => import('/src/pages/setUp/setUp.vue'),
             redirect:'/company',
-            children:[
-                {
-                    path:'/company',
-                    name:'company',
-                    component:() => import('/src/pages/setUp/company.vue'),
-                },
-                {
-                    path:'/regulation',
-                    name:'regulation',
-                    component:() => import('/src/pages/setUp/regulation.vue'),
-                },
-                {
-                    path:'/group',
-                    name:'group',
-                    component:() => import('/src/pages/setUp/group.vue'),
-                },
-                {
-                    path:'/position',
-                    name:'position',
-                    component:() => import('/src/pages/setUp/position.vue'),
-                },
-            ]
+            children:setupPageNames.map(pageName => ({
+                path: `/${pageName}`,
+                name: pageName,
+                component: () => import(`/src/pages/setUp/${pageName}.vue`),
+            })),
         },
     ]
 })
