@@ -14,36 +14,71 @@ export default {
     actions:{
         async initialization(context) {
             //获取本地用户的账号信息和哈希
-            const identification = localStorage.getItem('identification');
+            const mobile = localStorage.getItem('identification');
             const identityHash = localStorage.getItem('identityHash');
             //判断本地是否存储着登录信息
-            if (identification && identityHash) {
+            if (mobile && identityHash) {
                 try {
-                    const response = await axios.post('http://localhost:1023/app.php', {
-                        identification,
-                        identityHash
-                    });
-                    console.log(response.data)
+                    const url = 'http://localhost:1023/app.php/login'
+                    const postInfo = {mobile,identityHash}
+                    const response = await axios.post(url,postInfo);
                     if (response.data.isLonggedIn) {
                         context.commit('replaceAll', ['loginState', true]);
+
+                        //缓存个人信息
+
                         return true;
                     } else {
-                        console.log('登录失败');
-                        localStorage.removeItem('identification');
-                        localStorage.removeItem('identityHash');
+                        // localStorage.removeItem('identification');
+                        // localStorage.removeItem('identityHash');
+                        console.error(response.data.error)
                     }
+
                 } catch (error) {
-                    console.log('Error:', error);
+                    console.error('异步操作错误:', error);
+                    return false;
+
                 }
             }
 
             return false;
         },
-        sign_in(context,userinfo){
+        async sign_in(context,userinfo){
+            try {
+                const url = 'http://localhost:1023/app.php/login'
+                const response = await axios.post(url,userinfo);
+                
+                if (response.data.isLonggedIn) {
+                    context.commit('replaceAll', ['loginState', true]);
 
+                    //缓存个人信息
+                    return true;
+                } else {
+                    console.log(response.data.error)
+                }
+            } catch {
+                console.log('链接出错:'+error);
+            }
+            return false;
         },
-        sign_up(context,userinfo){
+        async sign_up(context,userinfo){
+            try {
+                const url = 'http://localhost:1023/app.php/register'
+                const response = await axios.post(url,userinfo);
+                
+                if (response.data.isLonggedIn) {
+                    context.commit('replaceAll', ['loginState', true]);
 
+                    //缓存个人信息
+
+                    return true;
+                } else {
+                    alert(response.data.error)
+                }
+            } catch {
+                alert('链接出错:', error);
+            }
+            return false;
         }
     },
 }

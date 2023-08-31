@@ -7,7 +7,7 @@
                     <div class="box_icons">
                     </div>
                     <!-- <span class="box_span">注册</span> -->
-                    <div v-for="element,index in property()" :key="index" class="input-group">
+                    <div v-for="element,index in property" :key="index" class="input-group">
                         <div v-if="complianceFunctions[index].value && (focusRecording[index] || loggedIn)" class="box_span">{{ element.Prompt }}</div>
                         <input :type="element.type" @blur="handleBlur(index)" class="box_input" :placeholder="element.placeholder" v-model="register_text[index]">
                     </div>
@@ -22,7 +22,7 @@
                     </div>
                     <!-- <span class="box_span">登录</span> -->
                     <input type="text" class="box_input" placeholder="Mobile" v-model="mobile">
-                    <input type="text" class="box_input" placeholder="Password" v-model="password">
+                    <input type="password" class="box_input" placeholder="Password" v-model="password">
                     <a class="box_link">忘记密码？</a>
                     <button class="box_button button submit" @click="sign_in">SIGN IN</button>
                 </div>
@@ -51,7 +51,10 @@
 <script setup>
     import { ref,reactive,computed } from 'vue';
     import { useStore } from "vuex"
+    import md5 from "blueimp-md5";
+    import { useRouter } from 'vue-router';
 
+    const router = useRouter();
     const store = useStore();
     //样式调整
     let LogIn = ref(true)
@@ -89,7 +92,7 @@
         computed(() => !(register_text[2] === register_text[3]))
     ]
 
-    let property = () => [
+    let property = [
         
         {
             Prompt:'* 请输入用户名,第一个不能为数字',
@@ -123,11 +126,32 @@
     }
 
     function sign_in(){
-        store.dispatch('login/sign_in',{mobile,password})
+        if(!(mobile.value === '' || password.value === '')){
+            store.dispatch('login/sign_in',{mobile:mobile.value,identityHash:md5(password.value)}).then(result =>{
+                if(result){
+                    const routeRecord = localStorage.getItem('routeRecord');
+                    router.push({ name: routeRecord?routeRecord:'homePage' })
+                }else{
+                    alert('账号或密码错误！')
+                }
+            })
+        }else{
+            alert('请输入账号和密码！')
+        }
+        // console.log(complianceFunctions)
     }
 
     function sign_up(){
-        store.dispatch('login/sign_up',register_text)
+        if(complianceFunctions.every(item => item.value === false)){
+            store.dispatch('login/sign_up',register_text).then(result =>{
+                if(result){
+                    router.push({ name: 'homePage' })
+                }
+            })
+        }else{
+            alert('请完整填写数据')
+        }
+        loggedIn.value = true
     }
 </script>
 

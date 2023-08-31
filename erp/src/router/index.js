@@ -5,7 +5,7 @@ const routerHistory = createWebHashHistory();
 //引入组件
 const setupPageNames = ['company', 'regulation', 'group', 'assignment', 'management', 'checklist','permission','portion','virtual','dataCheck','settings','key'];
 
-export default createRouter({
+const router = createRouter({
 	history:routerHistory,
     routes:[
         {
@@ -80,3 +80,10 @@ export default createRouter({
         },
     ]
 })
+
+router.beforeEach((to, from, next) => {
+    console.log(to,from)
+    next()
+})
+
+export default router
